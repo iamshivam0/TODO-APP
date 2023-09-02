@@ -15,16 +15,28 @@ export default function Home() {
     setdesc("")
     console.log(main)
   }
+  const deletehandler = (i) => {
+    let copytask = [...main]
+    copytask.splice(i, 1)
+    setmain(copytask)
+  }
 
   let rendertask = <h2>NO TASK</h2>
   if (main.length > 0) {
     rendertask = main.map((t, i) => {
       return <ul className="flex items-center justify-between ">
         <div className="flex justify-between mb-1 w-1/2">
+          <h1>{i + 1}</h1>
           <h5 className="text-2xl font-bold">{t.title}</h5>
           <h4 className="text-xl font-semibold">{t.desc}</h4>
         </div>
-        <button>delete</button>
+        <button onClick={() => {
+          deletehandler(i)
+        }}
+          className="bg-red-400 rounded p-1 m-2 "
+        >
+          Delete
+        </button>
       </ul>
     })
   }
@@ -32,7 +44,7 @@ export default function Home() {
   return (
     <>
       <h1 className="font-extrabold p-5  text-center text-5xl bg-[#1E4174] text-[#DDA94B]">
-        Shivam TODO APP
+        TODO APP
       </h1>
       <div>
         <form onSubmit={submitHandler}>
@@ -50,11 +62,11 @@ export default function Home() {
               setdesc(e.target.value);
             }}
           />
-          <button className="bg-[#1E4174] border px-4 py-2 rounded-full text-[#DDA94B]">Add task</button>
+          <button className="bg-[#1E4174] border text-2xl px-4 py-2 rounded-full text-[#DDA94B]">Add task</button>
         </form>
 
         <hr />
-        <div className="p-8 bg-slate-200 text-2xl">
+        <div className="p-8 bg-slate-200 text-2xl rounded m-4">
           {rendertask}
         </div>
 
